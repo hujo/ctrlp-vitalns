@@ -15,7 +15,7 @@ if !exists('s:Id') "{{{
   \ 'nolim' : 1,
   \ })
   let s:Id = g:ctrlp_builtins + len(g:ctrlp_ext_vars)
-e0ndif "}}}
+endif "}}}
 
 function! s:indexing() abort "{{{
   let htags = split(globpath(&rtp, 'doc/tags'), '\n')
