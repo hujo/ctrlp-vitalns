@@ -24,7 +24,6 @@ function! s:indexing() abort "{{{
   let vzone = 0
   for htag in htags
     if htag !=# vimhtag && filereadable(htag)
-      let lines = readfile(htag)
       for line in readfile(htag)
         if line[0] != 'V'
           if vzone | return result | endif
