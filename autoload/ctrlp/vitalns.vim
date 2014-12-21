@@ -18,14 +18,14 @@ if !exists('s:Id') "{{{
 endif "}}}
 
 function! s:indexing() abort "{{{
-  let htags = split(globpath(&rtp, 'doc/tags'), '\n')
+  let htags = split(globpath(&runtimepath, 'doc/tags'), '\n')
   let vimhtag = glob('$VIMRUNTIME/doc/tags')
   let result = []
   let vzone = 0
   for htag in htags
     if htag !=# vimhtag && filereadable(htag)
       for line in readfile(htag)
-        if line[0] != 'V'
+        if line[0] !=# 'V'
           if vzone | return result | endif
           continue
         endif
@@ -48,8 +48,8 @@ function! s:find(str) abort "{{{
   let t = ['__latest__'] + split(a:str, '\v\.')[1:]
   let p = 'autoload/vital/' . join(t[:-2], '/') . '.vim'
   let name = t[-1]
-  let path = get(split(globpath(&rtp, p), '\v\r\n|\n|\r'), 0, '')
-  if path != '' && name != '' && filereadable(path)
+  let path = get(split(globpath(&runtimepath, p), '\v\r\n|\n|\r'), 0, '')
+  if path !=# '' && name !=# '' && filereadable(path)
     let regexp = '\v\C\s*fu%[nction](\!\s*|\s+)s:\V' . name . '\v\s*\([^)]*\)'
     let lines = readfile(path)
     for idx in range(len(lines))
