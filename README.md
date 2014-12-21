@@ -7,7 +7,7 @@ Jump to the location of the function definition of vital.vim
 
 ### Usage
 
-ctrlp-vitalns is getting a list of modules of vital.vim from helptag.
+ctrlp-vitalns is getting a list of modules of vital.vim from helptag.  
 Please create a helptag. see `:help helptag`
 
 ```vim
