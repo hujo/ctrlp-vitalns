@@ -18,29 +18,24 @@ if !exists('s:Id') "{{{
 endif "}}}
 
 function! s:indexing() abort "{{{
-  let htags = split(globpath(&runtimepath, 'doc/tags'), '\n')
-  let vimhtag = glob('$VIMRUNTIME/doc/tags')
   let result = []
   let vzone = 0
-  for htag in htags
-    if htag !=# vimhtag && filereadable(htag)
-      for line in readfile(htag)
-        if line[0] !=# 'V'
-          if vzone | return result | endif
-          continue
+  for htag in globpath(&runtimepath, 'doc/tags*', 0, 1)
+    for line in readfile(htag)
+      if line[0] !=# 'V'
+        if vzone | return result | endif
+        continue
+      endif
+      if line[:5] ==# 'Vital.'
+        let vzone = 1
+        let line = split(line, '\v\s')[0]
+        if line[-2:] ==# '()' && stridx(line, '-') == -1
+          let line = line[:-3]
+          "silent! call ctrlp#progress(len(result) . ': [indexing/vital] ' . line)
+          call add(result, line)
         endif
-        if line[:5] ==# 'Vital.'
-          let vzone = 1
-          let line = split(line, '\v\s')[0]
-          if line[-2:] ==# '()' && stridx(line, '-') == -1
-            let line = line[:-3]
-            silent! call ctrlp#progress(len(result) . ': [indexing/vital] ' . line)
-            call add(result, line)
-          endif
-        endif
-      endfor
-      return result
-    endif
+      endif
+    endfor
   endfor
   return result
 endfunction "}}}
