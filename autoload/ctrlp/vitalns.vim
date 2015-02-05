@@ -20,7 +20,7 @@ endif "}}}
 function! s:indexing() abort "{{{
   let result = []
   let vzone = 0
-  for htag in globpath(&runtimepath, 'doc/tags*', 0, 1)
+  for htag in split(globpath(&runtimepath, 'doc/tags*', 0), '\v\r\n|\r|\n')
     for line in readfile(htag)
       if line[0] !=# 'V'
         if vzone | return result | endif
