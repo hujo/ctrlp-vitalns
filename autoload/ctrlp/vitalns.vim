@@ -40,7 +40,7 @@ function! s:indexing() abort "{{{
   return result
 endfunction "}}}
 function! s:find(str) abort "{{{
-  let t = ['__latest__'] + split(a:str, '\v\.')[1:]
+  let t = ['__vital__'] + split(a:str, '\v\.')[1:]
   let p = 'autoload/vital/' . join(t[:-2], '/') . '.vim'
   let name = t[-1]
   let path = get(split(globpath(&runtimepath, p), '\v\r\n|\n|\r'), 0, '')
